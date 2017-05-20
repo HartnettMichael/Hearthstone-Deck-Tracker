@@ -211,7 +211,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					new MessageDialogs.Settings() {AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel"});
 				if(result == MessageDialogResult.Negative)
 					return;
-				Helper.StartHearthstoneAsync().Forget();
+				//Helper.StartHearthstoneAsync().Forget();
 				controller = await this.ShowProgressAsync("Importing arena deck", "Waiting for Hearthstone...", true);
 				while(!Core.Game.IsRunning)
 				{

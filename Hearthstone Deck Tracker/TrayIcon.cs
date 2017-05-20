@@ -45,11 +45,11 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
-			var startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => Helper.StartHearthstoneAsync().Forget())
-			{
-				Name = StartHearthstoneMenuItemName
-			};
-			_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
+			//var startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => Helper.StartHearthstoneAsync().Forget())
+			//{
+			//	Name = StartHearthstoneMenuItemName
+			//};
+			//_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
 
 			var useNoDeckMenuItem = new MenuItem("No-deck mode", (sender, args) => UseNoDeckContextMenu()) {Name = UseNoDeckMenuItemName};
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);

@@ -228,12 +228,12 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				new NoteDialog(Core.Game.CurrentGameStats).Show();
 		}
 
-		[PredefinedHotKeyAction("Start Hearthstone", "Starts the Battle.net launcher and/or Hearthstone.")]
-		public static void StartHearthstone()
-		{
-			if(Core.MainWindow.BtnStartHearthstone.IsEnabled)
-				Helper.StartHearthstoneAsync().Forget();
-		}
+		//[PredefinedHotKeyAction("Start Hearthstone", "Starts the Battle.net launcher and/or Hearthstone.")]
+		//public static void StartHearthstone()
+		//{
+		//	if(Core.MainWindow.BtnStartHearthstone.IsEnabled)
+		//		Helper.StartHearthstoneAsync().Forget();
+		//}
 
 		[PredefinedHotKeyAction("Show main window", "Brings up the main window.")]
 		public static void ShowMainWindow()

@@ -123,6 +123,12 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\squirrel.windows.1.6.0\lib\Net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.6\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.6\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -246,6 +252,7 @@
     <Compile Include="FlyoutControls\DeckHistory\DeckHistoryView.xaml.cs">
       <DependentUpon>DeckHistoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindowControls\CanViewReplayConverter.cs" />
     <Compile Include="Utility\MVVM\ViewModel.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotHelper.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotViewModel.cs" />
@@ -656,6 +663,12 @@
     </Compile>
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindowControls\DeckChartsView.xaml.cs">
+      <DependentUpon>DeckChartsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindowControls\HsReplayDeckInfoView.xaml.cs">
+      <DependentUpon>HsReplayDeckInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\MainWindowMenuView.xaml.cs">
       <DependentUpon>MainWindowMenuView.xaml</DependentUpon>
@@ -1120,6 +1133,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\DeckChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\HsReplayDeckInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

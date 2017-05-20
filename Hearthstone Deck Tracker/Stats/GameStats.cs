@@ -374,6 +374,49 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int SortableDuration => (EndTime - StartTime).Minutes;
 
 		[XmlIgnore]
+		public string Age 
+		{
+			get
+			{
+				var duration = DateTime.Now - StartTime;
+				int time;
+				string str;
+				const double delta = 0.01;
+				if(Math.Abs(duration.TotalDays - 1) < delta)
+				{
+					str = "{0} day ago";
+					time = (int)duration.TotalDays;
+				}
+				else if(duration.TotalDays > 1)
+				{
+					str = "{0} days ago";
+					time = (int)duration.TotalDays;
+				}
+				else if(Math.Abs(duration.TotalHours - 1) < delta)
+				{
+					str = "{0} hour ago";
+					time = (int)duration.TotalHours;
+				}
+				else if(duration.TotalHours > 1)
+				{
+					str = "{0} hours ago";
+					time = (int)duration.TotalHours;
+				}
+				else if(Math.Abs(duration.TotalMinutes - 1) < delta)
+				{
+					str = "{0} minute ago";
+					time = (int)duration.TotalMinutes;
+				}
+				else
+				{
+					str = "{0} minutes ago";
+					time = (int)duration.TotalMinutes;
+				}
+				return string.Format(str, time);
+			} 
+		}
+
+		[XmlIgnore]
 		public string GotCoin
 		{
 			get { return Coin ? "Yes" : "No"; }

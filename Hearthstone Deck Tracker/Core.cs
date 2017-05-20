@@ -142,8 +142,8 @@ namespace Hearthstone_Deck_Tracker
 			NewsManager.LoadNews();
 			HotKeyManager.Load();
 
-			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
-				Helper.StartHearthstoneAsync().Forget();
+			//if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
+			//	Helper.StartHearthstoneAsync().Forget();
 
 			ApiWrapper.UpdateAccountStatus().Forget();
 
@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
-					MainWindow.BtnStartHearthstone.Visibility = Visibility.Collapsed;
+					//MainWindow.BtnStartHearthstone.Visibility = Visibility.Collapsed;
 					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
 
 					Game.IsRunning = true;
@@ -241,7 +241,7 @@ namespace Hearthstone_Deck_Tracker
 					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
 
-					MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
+					//MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
 					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
 
 					if(Config.Instance.CloseWithHearthstone)

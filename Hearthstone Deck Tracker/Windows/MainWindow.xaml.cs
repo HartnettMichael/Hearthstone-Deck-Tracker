@@ -26,6 +26,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
+using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
 #if(SQUIRREL)
 	using Squirrel;
 #endif
@@ -48,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(selected != null)
 				DeckList.Instance.ActiveDeck = selected;
 			MainWindowMenu.SelectedDecks = selected != null ? new List<Deck> { selected } : new List<Deck>();
+			DeckCharts.SetDeck(selected);
+			HsReplayDeckInfo.SetDeck(selected);
 			await Core.Reset();
 		}
 
@@ -136,7 +139,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync().Forget();
+		//private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync().Forget();
 
 		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e) => FlyoutStats.IsOpen = false;
 
@@ -436,10 +439,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SelectDeck(decks.FirstOrDefault(), Config.Instance.AutoUseDeck);
 			var active = DeckList.Instance.ActiveDeck;
 			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks;
+			DeckCharts.SetDeck(decks.FirstOrDefault() ?? active);
+			HsReplayDeckInfo.SetDeck(decks.FirstOrDefault() ?? active);
 		}
 
 		public void SelectDeck(Deck deck, bool setActive)
 		{
+			
 			if(DeckList.Instance.ActiveDeck != null)
 				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
 			if(deck != null)

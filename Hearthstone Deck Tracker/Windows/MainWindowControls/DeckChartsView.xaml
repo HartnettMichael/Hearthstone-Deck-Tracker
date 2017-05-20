@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Windows.MainWindowControls.DeckChartsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+        <local:CanViewReplayConverter x:Key="CanViewReplayConverter" />
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <local:DeckChartsViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <DockPanel Visibility="{Binding HasData, Converter={StaticResource BoolToVisibilityConverter}}">
+            <!--<TextBlock Text="OPPONENTS" FontWeight="SemiBold" Margin="5,0,0,0"/>
+            <wpf:CartesianChart Series="{Binding SeriesCollection}" Height="50" Width="400" Hoverable="False">
+                <wpf:CartesianChart.AxisX>
+                    <wpf:Axis Separator="{x:Static wpf:DefaultAxes.CleanSeparator}" LabelFormatter="{Binding EmptyFormatter}"/>
+                </wpf:CartesianChart.AxisX>
+                <wpf:CartesianChart.AxisY>
+                    <wpf:Axis Separator="{x:Static wpf:DefaultAxes.CleanSeparator}" LabelFormatter="{Binding EmptyFormatter}" />
+                </wpf:CartesianChart.AxisY>
+            </wpf:CartesianChart>-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+                <StackPanel Margin="0,0,70,0">
+                    <!--<TextBlock Text="OPPONENTS" TextAlignment="Center" FontWeight="SemiBold"/>-->
+                    <wpf:PieChart DataTooltip="{x:Null}" Hoverable="False" Width="200" Height="180" Series="{Binding OpponentCollection}" StartingRotationAngle="0" LegendLocation="Left">
+                    </wpf:PieChart>
+                </StackPanel>
+                <!--<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel.Resources>
+                        <Style TargetType="Grid">
+                            <Setter Property="Margin" Value="10,10,0,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="WINRATE" TextAlignment="Center" FontWeight="SemiBold"/>
+                    <Grid>
+                        <TextBlock Style="{StaticResource WinrateGaugeTextStyle}">
+                            <Run Text="{Binding WinrateFirst}"/>%
+                            <LineBreak/>
+                            <Run Text="GOING FIRST" FontSize="10"/>
+                        </TextBlock>
+                        <wpf:Gauge Value="{Binding WinrateFirst}" Style="{StaticResource WinrateGaugeStyle}"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Style="{StaticResource WinrateGaugeTextStyle}">
+                            <Run Text="{Binding WinrateSecond}"/>%
+                            <LineBreak/>
+                            <Run Text="GOING SECOND" FontSize="10"/>
+                        </TextBlock>
+                        <wpf:Gauge Value="{Binding WinrateSecond}" Style="{StaticResource WinrateGaugeStyle}"/>
+                    </Grid>
+                </StackPanel>-->
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock FontWeight="SemiBold" TextAlignment="Center" Margin="0,10,0,0">
+                        <Run Text="Wins:"/>
+                        <Run Text="{Binding Wins}"/>
+                    </TextBlock>
+                    <TextBlock FontWeight="SemiBold" TextAlignment="Center" Margin="0,2,0,10">
+                        <Run Text="Losses:"/>
+                        <Run Text="{Binding Losses}"/>
+                    </TextBlock>
+                    <Grid VerticalAlignment="Top">
+                        <TextBlock Style="{StaticResource WinrateGaugeTextStyle}">
+                            <Run Text="{Binding WinrateTotal}"/>%
+                            <LineBreak/>
+                            <Run Text="WINRATE" FontSize="10" />
+                        </TextBlock>
+                        <wpf:Gauge Value="{Binding WinrateTotal}" Style="{StaticResource WinrateGaugeStyle}"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <ScrollViewer Margin="0,5,0,0">
+                <ItemsControl ItemsSource="{Binding Games, IsAsync=True}">
+                    <ItemsControl.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                        <local:StaticCommands x:Key="StaticCommands"/>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Name="ItemBorder"  BorderThickness="0,0,0,1" BorderBrush="{DynamicResource MenuItemDisabledBrush}">
+                                <Grid Cursor="Hand" Height="35" IsEnabled="{Binding Converter={StaticResource CanViewReplayConverter}, Path=.}">
+                                    <Grid.InputBindings>
+                                        <MouseBinding MouseAction="LeftClick" Command="{Binding Source={StaticResource StaticCommands}, Path=OpenReplayCommand}" CommandParameter="{Binding}"/>
+                                    </Grid.InputBindings>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Background" Value="{DynamicResource ControlsDisabledBrush}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" Margin="7,0,0,0">
+                                            <Run Text="vs."></Run>
+                                        </TextBlock>
+                                        <Image Source="{Binding OpponentHeroImage}" Width="28" Height="28" RenderOptions.BitmapScalingMode="Fant" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding OpponentHero}" FontWeight="SemiBold" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Center">
+                                        <Run Text="{Binding Result}" Foreground="{Binding ResultTextColor}"/>
+                                    </TextBlock>
+                                    <StackPanel Margin="5,0,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Age}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                        <Grid Width="15" DockPanel.Dock="Right" Margin="5,0,0,0" >
+                                            <TextBlock Text="✓" ToolTip="Uploaded" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="Green" 
+                                               Visibility="{Binding HsReplay.Uploaded, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                    <Setter TargetName="ItemBorder" Property="BorderThickness" Value="0,1"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+        <Grid Visibility="{Binding HasData, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+           <Image Source="{StaticResource AppIcon}" Width="256" Height="256" Opacity="0.05"/> 
+            <DockPanel VerticalAlignment="Center">
+                <TextBlock TextAlignment="Center">
+                    <Run Text="No data." Foreground="Gray"/>
+                    <LineBreak/>
+                    <Run Text="Play some games!" Foreground="Gray"/>
+                </TextBlock>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</UserControl>
